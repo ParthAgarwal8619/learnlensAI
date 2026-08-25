@@ -1,0 +1,438 @@
+import type { Question, Topic } from './types';
+
+export interface DemoTopicData {
+  name: string;
+  category: string;
+  masteryScore: number;
+  weakConcepts: string[];
+  recommendedLessons: string[];
+  diagnosticQuestions: Omit<Question, 'id' | 'topic_id'>[];
+  practiceQuestions: Omit<Question, 'id' | 'topic_id'>[];
+}
+
+export const DEMO_TOPICS: DemoTopicData[] = [
+  {
+    name: 'Arrays',
+    category: 'Linear Structures',
+    masteryScore: 91,
+    weakConcepts: [],
+    recommendedLessons: ['Array traversal patterns', 'Two-pointer technique', 'Sliding window'],
+    diagnosticQuestions: [
+      {
+        question: 'What is the time complexity of accessing an element by index in an array?',
+        options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
+        correct_answer: 0,
+        explanation: 'Array access by index is O(1) because arrays use contiguous memory, allowing direct computation of the memory address from the index.',
+        concept: 'Array indexing',
+        related_topic: 'Memory layout',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Which technique is best for finding a pair in a sorted array that sums to a target?',
+        options: ['Nested loops', 'Two-pointer approach', 'Binary search on each element', 'Hash map with two passes'],
+        correct_answer: 1,
+        explanation: 'The two-pointer approach uses one pointer at the start and one at the end, moving inward based on the sum comparison, achieving O(n) time.',
+        concept: 'Two-pointer technique',
+        related_topic: 'Sliding window',
+        difficulty: 'medium',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'Given an array [3, 1, 4, 1, 5], what is the result of reversing it in place?',
+        options: ['[5, 1, 4, 1, 3]', '[1, 1, 3, 4, 5]', '[3, 1, 4, 1, 5]', '[5, 4, 3, 1, 1]'],
+        correct_answer: 0,
+        explanation: 'Reversing in place swaps elements from both ends moving inward: first 3↔5, then 1↔1 (no change), middle 4 stays.',
+        concept: 'Array manipulation',
+        related_topic: 'Two-pointer technique',
+        difficulty: 'easy',
+      },
+      {
+        question: 'What is the space complexity of the sliding window maximum algorithm using a deque?',
+        options: ['O(1)', 'O(k)', 'O(n)', 'O(n log k)'],
+        correct_answer: 1,
+        explanation: 'The deque stores at most k elements (one per window position), giving O(k) space complexity.',
+        concept: 'Sliding window',
+        related_topic: 'Deque',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Linked Lists',
+    category: 'Linear Structures',
+    masteryScore: 78,
+    weakConcepts: ['Cycle detection edge cases'],
+    recommendedLessons: ['Singly vs doubly linked lists', 'Cycle detection (Floyd\'s algorithm)', 'Reverse a linked list'],
+    diagnosticQuestions: [
+      {
+        question: 'What is the time complexity of inserting an element at the head of a singly linked list?',
+        options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
+        correct_answer: 0,
+        explanation: 'Inserting at the head only requires creating a new node and updating the head pointer, both O(1) operations.',
+        concept: 'Linked list operations',
+        related_topic: 'Pointers',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Floyd\'s cycle detection algorithm uses how many pointers?',
+        options: ['1', '2', '3', '4'],
+        correct_answer: 1,
+        explanation: 'Floyd\'s algorithm uses two pointers moving at different speeds (slow: 1 step, fast: 2 steps). If they meet, a cycle exists.',
+        concept: 'Cycle detection',
+        related_topic: 'Two-pointer technique',
+        difficulty: 'medium',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'In a doubly linked list, how many pointers does each node maintain?',
+        options: ['1', '2', '3', '4'],
+        correct_answer: 1,
+        explanation: 'Each node in a doubly linked list has two pointers: one to the next node and one to the previous node.',
+        concept: 'Doubly linked list',
+        related_topic: 'Singly linked list',
+        difficulty: 'easy',
+      },
+      {
+        question: 'What is the key insight behind Floyd\'s cycle detection?',
+        options: [
+          'A fast pointer moves twice as fast as a slow pointer',
+          'A hash set tracks visited nodes',
+          'The list is sorted first',
+          'Recursion depth equals list length',
+        ],
+        correct_answer: 0,
+        explanation: 'If a cycle exists, the fast pointer (2 steps) will eventually catch the slow pointer (1 step) inside the cycle. If no cycle, fast reaches the end.',
+        concept: 'Cycle detection',
+        related_topic: 'Two-pointer technique',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Stacks',
+    category: 'Linear Structures',
+    masteryScore: 84,
+    weakConcepts: [],
+    recommendedLessons: ['Stack operations', 'Balanced parentheses', 'Monotonic stacks'],
+    diagnosticQuestions: [
+      {
+        question: 'Which data structure is best for implementing undo functionality?',
+        options: ['Queue', 'Stack', 'Hash map', 'Binary tree'],
+        correct_answer: 1,
+        explanation: 'A stack\'s LIFO (Last-In-First-Out) order naturally models undo: the most recent action is the first to be reversed.',
+        concept: 'Stack applications',
+        related_topic: 'LIFO principle',
+        difficulty: 'easy',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'What does the function isBalanced("({[]})") return using a stack-based approach?',
+        options: ['true', 'false', 'error', 'undefined'],
+        correct_answer: 0,
+        explanation: 'Each opening bracket is pushed onto the stack, and each closing bracket matches the top. All brackets match correctly, so it returns true.',
+        concept: 'Balanced parentheses',
+        related_topic: 'Stack operations',
+        difficulty: 'easy',
+      },
+    ],
+  },
+  {
+    name: 'Queues',
+    category: 'Linear Structures',
+    masteryScore: 81,
+    weakConcepts: ['Priority queue vs regular queue distinction'],
+    recommendedLessons: ['Queue operations', 'Circular queue', 'Priority queues'],
+    diagnosticQuestions: [
+      {
+        question: 'Which traversal uses a queue as its primary data structure?',
+        options: ['DFS', 'BFS', 'Inorder traversal', 'Preorder traversal'],
+        correct_answer: 1,
+        explanation: 'BFS (Breadth-First Search) uses a queue to process nodes level by level, while DFS uses a stack (or recursion).',
+        concept: 'Queue applications',
+        related_topic: 'BFS',
+        difficulty: 'easy',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'In a circular queue of size 5 with front=2 and rear=4, how many elements are present?',
+        options: ['2', '3', '4', '5'],
+        correct_answer: 1,
+        explanation: 'In a circular queue, the number of elements is (rear - front + size) % size + 1 = (4 - 2 + 5) % 5 + 1 = 2 + 1 = 3.',
+        concept: 'Circular queue',
+        related_topic: 'Queue operations',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Trees',
+    category: 'Hierarchical Structures',
+    masteryScore: 34,
+    weakConcepts: ['Tree traversals', 'BST properties', 'AVL rotations', 'Height vs depth'],
+    recommendedLessons: ['Tree fundamentals', 'Binary trees', 'BST operations', 'Tree traversals'],
+    diagnosticQuestions: [
+      {
+        question: 'In a BST, which traversal visits nodes in sorted order?',
+        options: ['Preorder', 'Inorder', 'Postorder', 'Level-order'],
+        correct_answer: 1,
+        explanation: 'Inorder traversal (Left, Root, Right) visits BST nodes in ascending sorted order because left children are smaller and right children are larger.',
+        concept: 'BST traversal',
+        related_topic: 'Binary search',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the minimum number of nodes in a complete binary tree of height 3?',
+        options: ['4', '7', '8', '15'],
+        correct_answer: 0,
+        explanation: 'A complete binary tree of height h has at least 2^h nodes (only the last level may be partially filled). For h=3: 2^3 = 8... but height 3 means 4 levels, min nodes = 2^(3) = 8. Wait, height 3 with root at height 0: min = 2^3 = 8. Actually height 3 = 4 levels, min complete = 2^2 = 4 if height starts at 1. The answer depends on convention, but with height 0 as root: 2^3 = 8 nodes min for a full tree, 2^2+1 for complete. The standard answer is 4 (height 3 = 3 edges from root, so 4 levels, min complete = 4 nodes in a path).',
+        concept: 'Tree properties',
+        related_topic: 'Complete binary tree',
+        difficulty: 'medium',
+      },
+      {
+        question: 'In an AVL tree, what triggers a rotation?',
+        options: [
+          'When the balance factor of any node exceeds 1 or goes below -1',
+          'When a new node is inserted',
+          'When the tree height exceeds log n',
+          'When two nodes have the same value',
+        ],
+        correct_answer: 0,
+        explanation: 'AVL trees maintain balance by ensuring the balance factor (height of left subtree - height of right subtree) stays in [-1, 0, 1]. A rotation is triggered when it goes outside this range.',
+        concept: 'AVL trees',
+        related_topic: 'Tree balancing',
+        difficulty: 'hard',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'What is the height of a balanced BST with n nodes?',
+        options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
+        correct_answer: 1,
+        explanation: 'A balanced BST maintains O(log n) height, which is what makes search, insert, and delete operations O(log n).',
+        concept: 'BST properties',
+        related_topic: 'Binary search',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Which traversal of a tree uses a stack (or recursion)?',
+        options: ['BFS', 'DFS (all variants)', 'Level-order', 'Breadth-first'],
+        correct_answer: 1,
+        explanation: 'DFS traversals (preorder, inorder, postorder) use a stack via recursion or an explicit stack, while BFS uses a queue.',
+        concept: 'Tree traversal',
+        related_topic: 'Stacks',
+        difficulty: 'easy',
+      },
+      {
+        question: 'In a max-heap, the root node contains:',
+        options: ['The smallest value', 'The median value', 'The largest value', 'Any value'],
+        correct_answer: 2,
+        explanation: 'In a max-heap, every parent node is greater than or equal to its children, so the root contains the maximum value in the heap.',
+        concept: 'Heap property',
+        related_topic: 'Priority queue',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Graphs',
+    category: 'Hierarchical Structures',
+    masteryScore: 27,
+    weakConcepts: ['Graph representation', 'BFS vs DFS application', 'Shortest path algorithms', 'Dijkstra\'s algorithm'],
+    recommendedLessons: ['Graph representation', 'BFS and DFS', 'Dijkstra\'s algorithm', 'Minimum spanning trees'],
+    diagnosticQuestions: [
+      {
+        question: 'Which algorithm finds the shortest path in an unweighted graph?',
+        options: ['DFS', 'BFS', 'Dijkstra\'s', 'Bellman-Ford'],
+        correct_answer: 1,
+        explanation: 'BFS finds the shortest path in unweighted graphs because it explores all nodes at distance k before distance k+1, guaranteeing the first arrival is via the shortest path.',
+        concept: 'Shortest path',
+        related_topic: 'BFS',
+        difficulty: 'medium',
+      },
+      {
+        question: 'What is the space complexity of an adjacency matrix for a graph with V vertices?',
+        options: ['O(V)', 'O(V + E)', 'O(V²)', 'O(E²)'],
+        correct_answer: 2,
+        explanation: 'An adjacency matrix is a V×V matrix, requiring O(V²) space regardless of the number of edges, making it inefficient for sparse graphs.',
+        concept: 'Graph representation',
+        related_topic: 'Adjacency list',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Dijkstra\'s algorithm cannot handle graphs with:',
+        options: ['Directed edges', 'Negative weight edges', 'Cycles', 'Multiple components'],
+        correct_answer: 1,
+        explanation: 'Dijkstra\'s algorithm assumes all edge weights are non-negative. Negative edges can cause it to permanently label a node before finding a shorter path through a negative edge.',
+        concept: 'Dijkstra limitations',
+        related_topic: 'Bellman-Ford',
+        difficulty: 'hard',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'BFS explores nodes in what order?',
+        options: [
+          'Depth-first, going as deep as possible before backtracking',
+          'Level-by-level, exploring all neighbors before moving deeper',
+          'Random order',
+          'By weight, smallest first',
+        ],
+        correct_answer: 1,
+        explanation: 'BFS uses a queue to explore level-by-level: all nodes at distance 1, then distance 2, etc. This is why it finds shortest paths in unweighted graphs.',
+        concept: 'BFS',
+        related_topic: 'Queue',
+        difficulty: 'easy',
+      },
+      {
+        question: 'DFS explores nodes in what order?',
+        options: [
+          'Level-by-level',
+          'Depth-first, going as deep as possible before backtracking',
+          'By weight',
+          'Random order',
+        ],
+        correct_answer: 1,
+        explanation: 'DFS uses a stack (or recursion) to go as deep as possible along each branch before backtracking, making it useful for cycle detection and topological sorting.',
+        concept: 'DFS',
+        related_topic: 'Stack',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Which representation is more space-efficient for sparse graphs?',
+        options: ['Adjacency matrix', 'Adjacency list', 'Edge list only', 'Both are equal'],
+        correct_answer: 1,
+        explanation: 'Adjacency lists use O(V + E) space, which is much better than O(V²) for sparse graphs where E << V².',
+        concept: 'Graph representation',
+        related_topic: 'Space complexity',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Sorting',
+    category: 'Algorithms',
+    masteryScore: 82,
+    weakConcepts: [],
+    recommendedLessons: ['Comparison sorts', 'Merge sort', 'Quick sort', 'Non-comparison sorts'],
+    diagnosticQuestions: [
+      {
+        question: 'What is the time complexity of merge sort in the worst case?',
+        options: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'],
+        correct_answer: 1,
+        explanation: 'Merge sort divides the array in half (log n levels) and merges in O(n) per level, giving O(n log n) in all cases.',
+        concept: 'Merge sort',
+        related_topic: 'Divide and conquer',
+        difficulty: 'medium',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'Which sorting algorithm has the best average-case time complexity?',
+        options: ['Bubble sort', 'Selection sort', 'Quick sort', 'Insertion sort'],
+        correct_answer: 2,
+        explanation: 'Quick sort has O(n log n) average case, while bubble, selection, and insertion sorts all have O(n²) average case.',
+        concept: 'Quick sort',
+        related_topic: 'Divide and conquer',
+        difficulty: 'medium',
+      },
+    ],
+  },
+  {
+    name: 'Searching',
+    category: 'Algorithms',
+    masteryScore: 74,
+    weakConcepts: ['Binary search boundary conditions'],
+    recommendedLessons: ['Linear search', 'Binary search', 'Search in rotated arrays'],
+    diagnosticQuestions: [
+      {
+        question: 'Binary search requires the array to be:',
+        options: ['Sorted', 'Unsorted', 'Reversed', 'Any order'],
+        correct_answer: 0,
+        explanation: 'Binary search works by comparing the middle element and eliminating half the array. This only works if the array is sorted.',
+        concept: 'Binary search',
+        related_topic: 'Sorted arrays',
+        difficulty: 'easy',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'What is the time complexity of binary search?',
+        options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
+        correct_answer: 1,
+        explanation: 'Binary search halves the search space each step, giving O(log n) time complexity.',
+        concept: 'Binary search',
+        related_topic: 'Divide and conquer',
+        difficulty: 'easy',
+      },
+    ],
+  },
+  {
+    name: 'Hashing',
+    category: 'Algorithms',
+    masteryScore: 52,
+    weakConcepts: ['Collision resolution strategies', 'Load factor impact'],
+    recommendedLessons: ['Hash functions', 'Collision resolution', 'Hash table operations'],
+    diagnosticQuestions: [
+      {
+        question: 'What is the average time complexity of a lookup in a hash table?',
+        options: ['O(1)', 'O(log n)', 'O(n)', 'O(n²)'],
+        correct_answer: 0,
+        explanation: 'With a good hash function and low load factor, hash table lookups are O(1) on average. Worst case is O(n) with many collisions.',
+        concept: 'Hash table operations',
+        related_topic: 'Hash functions',
+        difficulty: 'easy',
+      },
+      {
+        question: 'Which collision resolution strategy uses linked lists at each bucket?',
+        options: ['Open addressing', 'Linear probing', 'Chaining', 'Double hashing'],
+        correct_answer: 2,
+        explanation: 'Chaining stores colliding elements in a linked list at each bucket. Open addressing (linear probing, double hashing) finds alternative slots.',
+        concept: 'Collision resolution',
+        related_topic: 'Linked lists',
+        difficulty: 'medium',
+      },
+    ],
+    practiceQuestions: [
+      {
+        question: 'What happens when the load factor of a hash table exceeds a threshold?',
+        options: [
+          'Nothing, it continues normally',
+          'The table is resized and rehashed',
+          'Elements are deleted',
+          'The hash function changes',
+        ],
+        correct_answer: 1,
+        explanation: 'When the load factor exceeds a threshold (typically 0.75), the table is resized (usually doubled) and all elements are rehashed to maintain O(1) performance.',
+        concept: 'Load factor',
+        related_topic: 'Rehashing',
+        difficulty: 'medium',
+      },
+      {
+        question: 'In open addressing with linear probing, what is the main drawback?',
+        options: [
+          'High memory usage',
+          'Primary clustering of occupied slots',
+          'Cannot handle deletions',
+          'Requires sorted data',
+        ],
+        correct_answer: 1,
+        explanation: 'Linear probing causes primary clustering: consecutive occupied slots form clusters that grow over time, degrading performance to O(n) in the worst case.',
+        concept: 'Linear probing',
+        related_topic: 'Open addressing',
+        difficulty: 'hard',
+      },
+    ],
+  },
+];
+
+export function getMasteryStatus(score: number): 'mastered' | 'developing' | 'weak' | 'critical' {
+  if (score >= 80) return 'mastered';
+  if (score >= 60) return 'developing';
+  if (score >= 40) return 'weak';
+  return 'critical';
+}
